@@ -10,13 +10,16 @@ $DIR = $ARGV[0];
 
 @files = glob("$DIR/*");
 
+
 foreach $file (@files)
 {
-    
-    #If the file is a project file, the destination dir starts with assignment
-    if($file =~ /proj([^.]*)/i)
+    #remove all directories and path seperators from the qualified path
+    ($file) = $file =~ /.*\/(.*)/i;
+
+    #if the file is a project file, the destination dir starts with assignment
+    if($file =~ /^proj([^.]*)/i)
     {   
-        $fileStruct = "$DIR/assigment.$1";
+        $fileStruct = "$DIR/assingment$1";
     }
 
     #The file is not a project file and the destination dir starts with misc
@@ -31,5 +34,5 @@ foreach $file (@files)
         `mkdir $fileStruct`;
     }
 
-    `mv $file $fileStruct`;
+    `mv $DIR/$file $fileStruct`;
 }
